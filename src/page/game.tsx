@@ -12,7 +12,7 @@ const Game = ({ socket }:any) => {
     const [group, setgroup] = useState('');
     useEffect(() => {
         getGroup();
-    }, []);
+    }, [group]);
     async function getGroup() {
         try {
             if (grpId) {
