@@ -15,7 +15,6 @@ function UserList({ group, socket }) {
 
     useEffect(() => {
         socket.on(groupId, function (data) {
-            console.log('data socket :>> ', data);
             newarr.current.push(data);
             setusergroup(newarr.current);
         });

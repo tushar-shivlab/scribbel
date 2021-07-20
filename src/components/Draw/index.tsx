@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import socketIOClient from 'socket.io-client';
 import common from '../../constant/common';
+import Timer from '../timer';
 const ENDPOINT = common.socket_base_url;
 
 var socket = socketIOClient(ENDPOINT, { transports: ['websocket'] });
@@ -17,9 +18,9 @@ type Coordinate = {
 const Canvas = ({ width, height }: CanvasProps) => {
     const [color, setcolor] = useState('#dddddd');
     const [isPainting, setIsPainting] = useState(false);
-    const [second, setSecond] = useState(5);
-    const [mousePosition, setMousePosition] =
-        useState<Coordinate | undefined>(undefined);
+    const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(
+        undefined,
+    );
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [connected, setConnected] = useState(false);
 
@@ -149,14 +150,7 @@ const Canvas = ({ width, height }: CanvasProps) => {
             socket.off('mouse', eventHandler);
         };
     }, [socket]);
-    useEffect(() => {
-        if (second > 0) {
-            setTimeout(() => setSecond(second - 1), 1000);
-        } else {
-            Clearcanvas();
-            setTimeout(() => setSecond(50), 5000);
-        }
-    }, [second]);
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function Clearcanvas() {
         if (!canvasRef.current) {
@@ -169,7 +163,9 @@ const Canvas = ({ width, height }: CanvasProps) => {
     return (
         <div>
             <div>
-                <p>{second}</p>
+                
+                    <Timer />
+                
             </div>
             <div>
                 Current color: {color}
